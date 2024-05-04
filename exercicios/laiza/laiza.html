@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Especial para Minha Namorada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #ffcccc;
+            padding: 20px;
+            text-align: center;
+        }
+       
+       
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .gallery img {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+
+
+        .love-letter {
+            width: 400px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        .message {
+            font-size: 18px;
+            margin: 20px;
+        }
+
+
+        .button {
+            background-color: #ff5733;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        } 
+        
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Página Especial para Minha Namorada</h1>
+    </header>
+    <div class="container">
+        <!-- Parte 1: Autenticação de Usuário -->
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+
+        <!-- Parte 2: Galeria de Fotos Interativa -->
+        <h2>Galeria de Fotos</h2>
+        <div id="gallery class="gallery"></div>
+
+        <!-- Parte 3: Playlist de Música Personalizada -->
+        <h2>Playlist Personalizada</h2>
+        <audio id="player" controls>
+            <source src="lz.opus" type="audio/mpeg">
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
+
+        <!-- Parte 4: Editor de Texto para Poemas ou Cartas de Amor -->
+        <h2>Poemas ou Cartas de Amor</h2>
+        <div class="love-letter">
+            <h1>Minha Querida Elliany</h1>
+            <p class="message">Quero que saiba o quanto você é especial para mim🥺 Você trouxe mais alegria na minha vida e Cada momento ao seu lado é sempre maravilhoso❤️.</p>
+            <p class="message">Seu sorriso é o mais lindo que conheço e se depender de mim, te farei sorrrir todos os dias</p>
+            <p class="message">Prometo ser a razão do seu stress nos próximos tempos, e não se preocupe que não vais precisar chamar a sua amiga para bater nenhuma miúda minha😅😅 .</p>
+            <button class="button" onclick="mostrarMensagem()">Clique para Revelar uma Mensagem Especial</button>
+            <p id="mensagem-especial" style="display: none; font-size: 20px; font-weight: bold; margin-top: 20px;"></p>
+            <button class="button" onclick="mostrarSurpresa()">Clique para Revelar uma Surpresa</button>
+            <p id="surpresa" style="display: none; font-size: 20px; font-weight: bold; margin-top: 20px;"></p>
+        </div>
+    
+        <script>
+            function mostrarMensagem() {
+                const mensagemEspecial = "Você ééo motivo do meu sorriso todos os dias😊 Você não é biscoito, mas você definitivamente adoça a minha vida. Se você fosse uma lágrima, eu não choraria só para não te perder. Você não é almofada mas durmo sempre com você na minha cabeça❤️ Você não é uma ladra, mas roubou obmeu coração. Você não é Google mas tem tudo o que tenho pesquisado";
+                document.getElementById("mensagem-especial").style.display = "block";
+                document.getElementById("mensagem-especial").textContent = mensagemEspecial;
+            }
+    
+            function mostrarSurpresa() {
+                const surpresa = "Já falei os motivos que me fazem gostar de ti? não nem, pois vou dizer agora... Adoro o seu jeito fe ser, a sua simplicidade, a sua calmaria e a sua fofura ❤️ essa vontdade que você tem de fazer algo que te ocupe, os seus planos para o fututo... Adoro ver quando ficas com ciúmes de mim e depois dizes para eu nao te mandar mais mensagens kkk, nao demoras zangar. E apesar fe ainda não termos convivifo muiyo juntos, adoro a sua companhia meu amor ❤️ Espero que ainda dê para viver muita coisa contigo e aproveitar da melhor forma possível cada segundo ao seu lado❤️";
+                document.getElementById("surpresa").style.display = "block";
+                document.getElementById("surpresa").textContent = surpresa;
+            }
+        </script>
+       
+       
+        <div id="editor">
+
+            <p>Escreva seu poema ou carta de amor aqui...</p>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-auth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.js"></script>
+    <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script>
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "SUA_API_KEY",
+            authDomain: "SEU_DOMINIO.firebaseapp.com",
+            projectId: "SEU_PROJECT_ID",
+            storageBucket: "SEU_STORAGE_BUCKET",
+            messagingSenderId: "SEU_SENDER_ID",
+            appId: "SUA_APP_ID"
+        };
+        // Inicializar o Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Evento de envio do formulário de login
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que o formulário seja enviado normalmente
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Autenticar usuário com email e senha
+            firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Login bem-sucedido, redirecionar para a página principal
+                window.location.href = 'pagina_principal.html';
+            })
+            .catch((error) => {
+                // Tratar erros de autenticação
+                alert(error.message);
+            });
+        });
+
+        // Configurar Dropzone para upload de fotos
+        Dropzone.autoDiscover = false;
+        const myDropzone = new Dropzone("div#gallery", {
+            url: "/upload.php", // Endpoint de upload no backend
+            acceptedFiles: 'image/*'
+        });
+
+        // Configurar Plyr para reprodutor de áudio
+        const player = new Plyr('#player');
+
+        // Configurar Quill para editor de texto
+        const quill = new Quill('#editor', {
+            theme: 'snow'
+        });
+    </script>
+</body>
+</html>
